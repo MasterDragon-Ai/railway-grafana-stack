@@ -1,6 +1,6 @@
-ARG VERSION=2.9.0
-
-FROM grafana/tempo:${VERSION}
+# Pinned: the Railway VERSION variable is intentionally ignored so redeploys
+# never pull a new major/minor implicitly. Bump here via PR.
+FROM grafana/tempo:2.9.0
 
 COPY tempo.yml /etc/tempo/tempo.yml
 
