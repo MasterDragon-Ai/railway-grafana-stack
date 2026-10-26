@@ -11,6 +11,12 @@ common:
       store: inmemory
   replication_factor: 1
   path_prefix: /loki
+  # Without this, chunks land in the container's working directory (ephemeral)
+  # while the index lives on the /loki volume, so every redeploy loses history.
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
 
 schema_config:
   configs:
@@ -26,3 +32,13 @@ storage_config:
   tsdb_shipper:
     active_index_directory: /loki/tsdb-index
     cache_location: /loki/tsdb-cache
+
+compactor:
+  working_directory: /loki/compactor
+  compaction_interval: 10m
+  retention_enabled: true
+  retention_delete_delay: 2h
+  delete_request_store: filesystem
+
+limits_config:
+  retention_period: 360h # 15 days

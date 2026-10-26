@@ -1,6 +1,6 @@
-ARG VERSION=11.5.2
-
-FROM grafana/grafana-oss:${VERSION}
+# Pinned: the Railway VERSION variable is intentionally ignored so redeploys
+# never pull a new major/minor implicitly. Bump here via PR.
+FROM grafana/grafana-oss:13.0.2
 
 # copy the datasources and dashboards
 COPY datasources /etc/grafana/provisioning/datasources
